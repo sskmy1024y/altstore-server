@@ -4,13 +4,15 @@
 </div>
 
 <div align="center">
-<a href="https://github.com/kentya6/Fuwari/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-green.svg" alt="License: MIT"></a>
+<a href="https://github.com/sskmy1024y/altstore-server/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-green.svg" alt="License: MIT"></a>
+
 </div>
 
 <br>
 
 <div align="center">
-  <strong>Selg hosting original altstore repository.</strong>
+  <strong>Self hosting original altstore repository.</strong>
+
 </div>
 
 ## ✅ Feature
