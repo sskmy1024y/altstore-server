@@ -27,12 +27,26 @@
 
 ## 💁‍♀️ Usage
 
+### Docker
+
 1.  Clone this repository
 2.  Copy `.env.example` to `.env`
 3.  Build and start docker
     ```shell
     $ docker-compose build
     $ docker-compose up -d
+    ```
+4.  Open `http://localhost:3000` (or your domain)
+
+### Node
+
+1.  Clone this repository
+2.  Copy `.env.example` to `.env`
+3.  Build and start server
+    ```shell
+    $ yarn
+    $ yarn build
+    $ yarn start
     ```
 4.  Open `http://localhost:3000` (or your domain)
 
