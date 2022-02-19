@@ -24,3 +24,6 @@ dist/**/*
 *.ipa
 .cache
 public/assets/apps.json
+
+# client app
+public/build/*

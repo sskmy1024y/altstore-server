@@ -33,8 +33,6 @@ export const register = async (ctx: Context) => {
       ctx.status = 400;
     }
   }
-
-  ctx.body = "";
 };
 
 const explansionIAP = async (ipaPath: string, filename: string) => {

@@ -10,6 +10,10 @@ export interface Config {
   country: string;
   identifier: string;
   rootDir: string;
+  admin: {
+    name: string | undefined;
+    pass: string | undefined;
+  };
 }
 
 const isDevMode = process.env.NODE_ENV == "development";
@@ -22,6 +26,10 @@ const config: Config = {
   country: process.env.COUNTRY || "en",
   identifier: process.env.IDENTIFIER || "com.example.store",
   rootDir: process.cwd(),
+  admin: {
+    name: process.env.ADMIN_NAME,
+    pass: process.env.ADMIN_PASS,
+  },
 };
 
 export { config };
