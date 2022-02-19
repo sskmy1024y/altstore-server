@@ -3,12 +3,15 @@ import path from "path";
 import { config } from "../config";
 import { AppInfo } from "../model/AppInfo";
 import { AppsJSON } from "../model/AppsJSON";
+import { getInfoPlist } from "../utils/InfoPlist";
 import { Log } from "../utils/Log";
-import { sleep } from "../utils/Promise";
 import { createAppInfo } from "./createAppInfo";
+import semver from "semver";
 
 export const generate = async () => {
-  const ipafiles = searchIPAFiles(`${config.rootDir}/public/assets`);
+  const ipafiles = await filterByBundleID(
+    searchIPAFiles(`${config.rootDir}/public/assets`)
+  );
 
   const appInfos = await Promise.all(
     ipafiles.map(async (ipaPath) => await createAppInfo(ipaPath))
@@ -31,6 +34,46 @@ const searchIPAFiles = (dirpath: string): string[] => {
       return prev;
     }
   }, []);
+};
+
+const filterByBundleID = async (ipafiles: string[]): Promise<string[]> => {
+  const detailInfo = await Promise.all(
+    ipafiles.map<
+      Promise<{ ipafile: string; bundleID: string; version: string }>
+    >(async (ipafile) => {
+      const infoPlist = await getInfoPlist(ipafile);
+      const version = infoPlist["CFBundleVersion"];
+      const bundleID = infoPlist["CFBundleIdentifier"];
+
+      return {
+        ipafile,
+        bundleID,
+        version,
+      };
+    })
+  );
+
+  const filteredInfo = detailInfo.reduce<
+    { ipafile: string; bundleID: string; version: string }[]
+  >((prev, info) => {
+    const currentVersion = semver.valid(info.version);
+    if (currentVersion === null) return prev;
+
+    const prevInfo = prev.find((v) => v.bundleID === info.bundleID);
+
+    if (prevInfo) {
+      const prevVersion = semver.valid(prevInfo.version)!;
+      if (semver.gt(currentVersion, prevVersion)) {
+        return [...prev.filter((v) => v.bundleID !== info.bundleID), info];
+      } else {
+        return prev;
+      }
+    } else {
+      return [...prev, info];
+    }
+  }, []);
+
+  return filteredInfo.map((v) => v.ipafile);
 };
 
 const createAppJson = async (appInfos: AppInfo[]) => {

@@ -52,6 +52,7 @@
     "@types/mime": "^2.0.3",
     "@types/node-fetch": "2",
     "@types/plist": "^3.0.2",
+    "@types/semver": "^7.3.9",
     "nodemon": "^2.0.15",
     "rollup": "^2.67.3",
     "rollup-plugin-css-only": "^3.1.0",
