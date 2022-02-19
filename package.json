@@ -1,0 +1,51 @@
+{
+  "name": "altstore-server",
+  "version": "1.0.0",
+  "author": "sho(@sskmy1024y)",
+  "license": "MIT",
+  "main": "dist/server.js",
+  "scripts": {
+    "build-ts": "tsc",
+    "copy-static-assets": "ts-node copyStaticAssets.ts",
+    "lint": "tsc --noEmit && eslint \"**/*.{js,ts}\" --quiet --fix",
+    "serve": "node dist/server.js",
+    "build": "npm run lint && npm run build-ts && npm run copy-static-assets",
+    "start": "npm run serve",
+    "dev": "nodemon --ignore tests/ --watch src -e ts,tsx --exec ts-node src/server.ts",
+    "test": "jest",
+    "test:coverage": "jest --collect-coverage",
+    "test:watch": "jest --watch"
+  },
+  "engines": {
+    "node": ">=16",
+    "npm": ">=8"
+  },
+  "dependencies": {
+    "@koa/router": "^10.1.1",
+    "@types/koa__router": "^8.0.11",
+    "@types/lodash": "^4.14.178",
+    "chokidar": "^3.5.3",
+    "dotenv": "^16.0.0",
+    "koa": "^2.13.4",
+    "koa-body": "^4.2.0",
+    "koa-static": "^5.0.0",
+    "lodash": "^4.17.21",
+    "mime": "^3.0.0",
+    "mime-types": "^2.1.34",
+    "node-fetch": "2",
+    "node-vibrant": "^3.2.1-alpha.1",
+    "plist": "^3.0.4",
+    "rgb-hex": "3",
+    "semver": "^7.3.5"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.13.4",
+    "@types/koa-static": "^4.0.2",
+    "@types/mime": "^2.0.3",
+    "@types/node-fetch": "2",
+    "@types/plist": "^3.0.2",
+    "nodemon": "^2.0.15",
+    "ts-node": "^10.5.0",
+    "typescript": "^4.5.5"
+  }
+}
