@@ -22,14 +22,15 @@ EXPOSE 3000
 CMD ["yarn", "dev"]
 
 # Build For Production
-FROM node:16.4.0-alpine AS builder
+FROM node:16.4.0-alpine AS production
 
 ENV NODE_ENV=production
+
+RUN apk update && apk add unzip
 
 WORKDIR /app
 COPY ./src .
 COPY --from=base /app/node_modules ./node_modules
-RUN yarn build
 
 EXPOSE 3000
 
