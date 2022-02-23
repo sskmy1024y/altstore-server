@@ -16,7 +16,7 @@ router.post("/register", koaBody({ multipart: true }), register);
 
 router.get("/apps.json", serve(`${config.rootDir}/public/assets`));
 
-router.get("/assets/(.*).ipa", serve(`${config.rootDir}/public/`));
+router.get("/assets/(.*)", serve(`${config.rootDir}/public/`));
 
 router.get("/", serve(`${config.rootDir}/public/`));
 router.get("/favicon.ico", serve(`${config.rootDir}/public/`));

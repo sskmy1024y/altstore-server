@@ -14,10 +14,12 @@ export const createAppInfo = async (ipaPath: string) => {
   const dotcache = await getDotCache(ipaPath);
 
   if (dotcache === undefined) {
-    const searchResult = await fetchAppInfoFromiTunesSearchAPI(
-      infoPlist["CFBundleName"],
-      infoPlist["CFBundleIdentifier"]
-    );
+    const searchResult = config.useItunesSearch
+      ? await fetchAppInfoFromiTunesSearchAPI(
+          infoPlist["CFBundleName"],
+          infoPlist["CFBundleIdentifier"]
+        )
+      : undefined;
     const appInfo = await generateAppInfo(ipaPath, infoPlist, searchResult);
     Log.info(`app info cache is generated for ${ipaPath}`);
     return appInfo;
@@ -44,12 +46,14 @@ const fetchAppInfoFromiTunesSearchAPI = async (
   bundleName: string,
   bundleId: string
 ) => {
+  Log.info("request appinfo for itunes search api");
   const result = await fetch(
     `https://itunes.apple.com/search?term=${bundleName}&country=${config.country}&entity=software`
   );
   try {
     const info = (await result.json()) as SearchAPIResult;
     const appInfo = info.results.find((v) => v.bundleId === bundleId);
+    Log.info(`result info: ${appInfo?.toString()}`);
     return appInfo;
   } catch {
     return undefined;
@@ -82,6 +86,8 @@ const generateAppInfo = async (
   const localizedDescription = searchResult?.description ?? "";
   const versionDate =
     searchResult?.currentVersionReleaseDate ?? new Date().toISOString();
+  const emptyIconURL =
+    "https://user-images.githubusercontent.com/16918590/155388288-a02623ac-b4b0-493c-9245-0432d973dcbc.png";
 
   const appInfo = {
     name: infoPlist["CFBundleName"],
@@ -92,7 +98,7 @@ const generateAppInfo = async (
     versionDescription: searchResult?.releaseNotes ?? "",
     downloadURL,
     localizedDescription,
-    iconURL: searchResult?.artworkUrl100 ?? "",
+    iconURL: searchResult?.artworkUrl100 ?? emptyIconURL,
     tintColor,
     size,
     screenshotURLs: searchResult?.screenshotUrls ?? [],
