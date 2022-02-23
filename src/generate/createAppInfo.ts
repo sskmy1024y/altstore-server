@@ -81,7 +81,8 @@ const generateAppInfo = async (
     `${config.host}`
   );
   const localizedDescription = searchResult?.description ?? "";
-  const versionDate = searchResult?.currentVersionReleaseDate ?? "";
+  const versionDate =
+    searchResult?.currentVersionReleaseDate ?? new Date().toISOString();
 
   const appInfo = {
     name: infoPlist["CFBundleName"],
