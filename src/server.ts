@@ -4,11 +4,11 @@ import Router from "@koa/router";
 import chokidar from "chokidar";
 import { config } from "./config";
 import { register } from "./handler/register/importIPA";
-import { generate } from "./generate";
 import * as _ from "lodash";
 import serve from "koa-static";
 import auth from "koa-basic-auth";
 import { Log } from "./utils/Log";
+import { handleWatcher } from "./handler/handleWatcher";
 
 const app = new Koa();
 const router = new Router();
@@ -45,10 +45,6 @@ const watcher = chokidar.watch(`${config.rootDir}/public/assets`, {
 const WAIT_MS = 30000;
 
 watcher.on("ready", function () {
-  console.log("ready watching...");
-
-  watcher.on("all", (eventName, path) => {
-    Log.info(`detected ${eventName} event: ${path}`);
-    _.debounce(generate, WAIT_MS)();
-  });
+  Log.info("ready watching...");
+  watcher.on("all", _.debounce(handleWatcher, WAIT_MS));
 });
