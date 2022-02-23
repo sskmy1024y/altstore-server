@@ -111,7 +111,7 @@ const getAppPermission = (infoPlist: {
   if (infoPlist["NSCameraUsageDescription"]) {
     appPermissions.push({
       type: "camera",
-      usageDescription: infoPlist["NSPhotoLibraryUsageDescription"],
+      usageDescription: infoPlist["NSCameraUsageDescription"],
     });
   }
   if (infoPlist["NSPhotoLibraryUsageDescription"]) {

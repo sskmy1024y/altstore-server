@@ -91,7 +91,7 @@ const createAppJson = async (appInfos: AppInfo[]) => {
 
   await fs.writeFileSync(
     `${config.rootDir}/public/assets/apps.json`,
-    JSON.stringify(appsJson),
+    JSON.stringify(appsJson, null, 2),
     "utf-8"
   );
 };
