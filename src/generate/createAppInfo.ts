@@ -77,6 +77,7 @@ const generateAppInfo = async (
   const size = fs.statSync(ipaPath).size;
   const tintColor = await getTintColor(searchResult?.artworkUrl100);
   const downloadURL = ipaPath.replace(`${config.rootDir}/public`, "");
+  const localizedDescription = searchResult?.description ?? "";
 
   const appInfo = {
     name: infoPlist["CFBundleName"],
@@ -86,6 +87,7 @@ const generateAppInfo = async (
     versionDate: infoPlist["BuildDate"],
     versionDescription: searchResult?.releaseNotes ?? "",
     downloadURL,
+    localizedDescription,
     iconURL: searchResult?.artworkUrl100 ?? "",
     tintColor,
     size,

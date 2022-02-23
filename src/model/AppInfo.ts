@@ -6,7 +6,7 @@ export interface AppInfo {
   versionDate: string;
   versionDescription: string;
   downloadURL: string;
-  // localizedDescription: string;
+  localizedDescription: string;
   iconURL: string;
   tintColor: string; // hex color e.g. `8A28F7`
   size: number;
