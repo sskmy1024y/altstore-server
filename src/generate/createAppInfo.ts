@@ -76,7 +76,10 @@ const generateAppInfo = async (
 ): Promise<AppInfo> => {
   const size = fs.statSync(ipaPath).size;
   const tintColor = await getTintColor(searchResult?.artworkUrl100);
-  const downloadURL = ipaPath.replace(`${config.rootDir}/public`, "");
+  const downloadURL = ipaPath.replace(
+    `${config.rootDir}/public`,
+    `${config.host}`
+  );
   const localizedDescription = searchResult?.description ?? "";
   const versionDate = searchResult?.currentVersionReleaseDate ?? "";
 

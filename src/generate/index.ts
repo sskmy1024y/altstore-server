@@ -79,7 +79,7 @@ const filterByBundleID = async (ipafiles: string[]): Promise<string[]> => {
 };
 
 const createAppJson = async (appInfos: AppInfo[]) => {
-  const sourceURL = `${config.host.replace(/https?:\/\//, "")}/apps.json`;
+  const sourceURL = `${config.host}/apps.json`;
 
   const appsJson: AppsJSON = {
     name: config.storeName,
