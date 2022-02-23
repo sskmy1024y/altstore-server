@@ -39,6 +39,7 @@
     "node-vibrant": "^3.2.1-alpha.1",
     "plist": "^3.0.4",
     "rgb-hex": "3",
+    "shell-escape": "^0.2.0",
     "sirv-cli": "^2.0.0",
     "uuid": "^8.3.2"
   },
@@ -51,6 +52,7 @@
     "@types/mime": "^2.0.3",
     "@types/node-fetch": "2",
     "@types/plist": "^3.0.2",
+    "@types/shell-escape": "^0.2.0",
     "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.12.0",
     "@typescript-eslint/parser": "^5.12.0",

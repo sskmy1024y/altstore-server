@@ -5,6 +5,7 @@ import { config } from "../../config";
 import { getInfoPlist } from "../../utils/InfoPlist";
 import { Log } from "../../utils/Log";
 import { exec } from "../../utils/Promise";
+import shellescape from "shell-escape";
 
 export const register = async (ctx: Context) => {
   try {
@@ -42,6 +43,7 @@ export const register = async (ctx: Context) => {
 const explansionIAP = async (ipaPath: string, filename: string) => {
   const infoPlist = await getInfoPlist(ipaPath);
   const explansionPath = `${config.rootDir}/public/assets/${infoPlist["CFBundleIdentifier"]}/${infoPlist["CFBundleVersion"]}`;
-  await exec(`mkdir -p ${explansionPath}`);
+  const cmd = shellescape(["mkdir", "-p", explansionPath]);
+  await exec(cmd);
   await fs.copyFile(ipaPath, `${explansionPath}/${filename}`);
 };

@@ -3,15 +3,20 @@ import plist from "plist";
 import { Log } from "./Log";
 import { exec } from "./Promise";
 import { v4 as uuidv4 } from "uuid";
+import shellescape from "shell-escape";
+import { config } from "../config";
 
 export const getInfoPlist = async (ipaPath: string) => {
-  const tempDir = `/temp/${uuidv4()}/`;
-  await exec(`mkdir -p ${tempDir}`);
+  const tempDir = `${config.rootDir}/temp/${uuidv4()}/`;
+  await exec(shellescape(["mkdir", "-p", tempDir]));
   try {
-    const result = await exec(
-      `unzip -o ${ipaPath} "Payload/*.app/Info.plist"`,
-      { cwd: tempDir }
-    );
+    const unzipCmd = shellescape([
+      "unzip",
+      "-o",
+      ipaPath,
+      "Payload/*.app/Info.plist",
+    ]);
+    const result = await exec(unzipCmd, { cwd: tempDir });
     const path = `${tempDir}/${
       result.stdout.match(/(?:inflating|extracting): (.*plist)/)?.[1]
     }`;
