@@ -38,7 +38,7 @@ app.listen(config.port);
 
 // watch assets dir
 const watcher = chokidar.watch(`${config.rootDir}/public/assets`, {
-  ignored: /[\/\\]\.|apps.json/,
+  ignored: /apps.json/,
   persistent: true,
 });
 
