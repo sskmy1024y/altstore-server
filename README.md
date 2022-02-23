@@ -1,6 +1,6 @@
 <div align="center">
-
-  <h1>altstore server</h1>
+  <img src="https://user-images.githubusercontent.com/16918590/155378581-397388e6-2f5c-45f4-ae87-564fac508882.png" height="300px" />
+  <h1>AltStore Server</h1>
 </div>
 
 <div align="center">
@@ -11,44 +11,44 @@
 <br>
 
 <div align="center">
-  <strong>Self hosting original altstore repository.</strong>
+  <strong>Self hosting original AltStore repository.</strong>
 
 </div>
 
 ## ✅ Feature
 
-*   [x] **Self hosting altstore source repository**
-*   [x] **Easy upload and auto create apps.json**
+*   [x] **Self hosting AltStore source repository**
+*   [x] **Easy upload and auto generate apps.json**
 *   [x] Work on Docker.
 
 ## 📦 Requirement
 
 *   Docker environment
+*   AltStore 1.5+ (now beta for patron only)
 
 ## 💁‍♀️ Usage
 
-### Docker
-
 1.  Clone this repository
-2.  Copy `.env.example` to `.env`
-3.  Build and start docker
-    ```shell
-    $ docker-compose build
-    $ docker-compose up -d
-    ```
-4.  Open `http://localhost:3000` (or your domain)
+2.  Copy `.env.example` to `.env` and write `ADMIN_NAME` and `ADMIN_PASS`.
+3.  Start server
+    * Docker 
+      ```sh
+      $ docker-compose build
+      $ docker-compose up -d
+      ```
+        
+    * Node
+      ```sh
+      $ yarn
+      $ yarn build
+      $ yarn start
+      ```
+4.  Open `http://localhost:3000/admin.html` and enter `ADMIN_NAME` and `ADMIN_PASS`.
+5.  Upload your ipa file and wait one minutes (generate apps.json).
+6.  Open `http://localhost:3000` (or your ip address / domain) on your iPhone.
+7.  Press `Add to AltStore`
+8.  If you want customize app info, edit to `.cache`  file in `public/assets/{bundleId}/{version}/`
 
-### Node
-
-1.  Clone this repository
-2.  Copy `.env.example` to `.env`
-3.  Build and start server
-    ```shell
-    $ yarn
-    $ yarn build
-    $ yarn start
-    ```
-4.  Open `http://localhost:3000` (or your domain)
 
 ## 🤝 Contributing
 
