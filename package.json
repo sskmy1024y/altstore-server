@@ -9,7 +9,6 @@
     "lint": "tsc --noEmit && eslint \"**/*.{js,ts}\" --quiet --fix",
     "serve": "node dist/server.js",
     "build": "yarn run lint && yarn build-ts && yarn build-client",
-    "start": "run-s build serve",
     "dev": "run-p dev-client dev-server",
     "dev-server": "nodemon --ignore tests/ --watch src -e ts,tsx --exec ts-node src/server.ts",
     "dev-client": "rollup -c -w",
