@@ -49,6 +49,6 @@ watcher.on("ready", function () {
 
   watcher.on("all", (eventName, path) => {
     Log.info(`detected ${eventName} event: ${path}`);
-    _.debounce(generate, WAIT_MS);
+    _.debounce(generate, WAIT_MS)();
   });
 });
