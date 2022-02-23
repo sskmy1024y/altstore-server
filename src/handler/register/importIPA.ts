@@ -24,20 +24,23 @@ export const register = async (ctx: Context) => {
 
     if (name && name.endsWith(".ipa") && fileExtension === "bin") {
       await explansionIAP(path, name);
+      Log.info("upload success");
       ctx.status = 201;
       ctx.body = "uploaded";
+    } else {
+      throw new Error(`${name} is not supported extention file.`);
     }
   } catch (err: unknown) {
     if (err instanceof Error) {
       Log.error("Regitering error", err);
       ctx.status = 400;
+      ctx.body = err.message;
     }
   }
 };
 
 const explansionIAP = async (ipaPath: string, filename: string) => {
   const infoPlist = await getInfoPlist(ipaPath);
-
   const explansionPath = `${config.rootDir}/public/assets/${infoPlist["CFBundleIdentifier"]}/${infoPlist["CFBundleVersion"]}`;
   await exec(`mkdir -p ${explansionPath}`);
   await fs.copyFile(ipaPath, `${explansionPath}/${filename}`);

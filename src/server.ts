@@ -18,7 +18,7 @@ router.get("/apps.json", serve(`${config.rootDir}/public/assets`));
 
 router.get("/assets/(.*).ipa", serve(`${config.rootDir}/public/`));
 
-// router.get("/", serve(`${config.rootDir}/public/`));
+router.get("/", serve(`${config.rootDir}/public/`));
 router.get("/favicon.ico", serve(`${config.rootDir}/public/`));
 router.get("/global.css", serve(`${config.rootDir}/public/`));
 router.get("/build/(.*)", serve(`${config.rootDir}/public/`));
@@ -41,10 +41,12 @@ const watcher = chokidar.watch(`${config.rootDir}/public/assets`, {
   persistent: true,
 });
 
+const WAIT_MS = 30000;
+
 watcher.on("ready", function () {
   console.log("ready watching...");
 
-  watcher.on("add", _.debounce(generate, 1000));
-  watcher.on("change", _.debounce(generate, 1000));
-  watcher.on("unlink", _.debounce(generate, 1000));
+  // watcher.on("add", _.debounce(generate, WAIT_MS));
+  watcher.on("change", _.debounce(generate, WAIT_MS));
+  watcher.on("unlink", _.debounce(generate, WAIT_MS));
 });

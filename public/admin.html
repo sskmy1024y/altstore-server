@@ -10,14 +10,72 @@
   <link rel='icon' href='/favicon.ico'>
   <link rel='stylesheet' href='/global.css'>
   <link rel='stylesheet' href='/build/bundle.css'>
+  <style>
+    .drag-erea {
+      padding: 100px 0;
+      width: 100%;
+      margin: 0 auto 20px;
+      background: rgba(255, 253, 249, 0.15);
+      text-align: center;
+      border-radius: 20px;
+    }
+  
+    .drag-erea.drag {
+      background: #f0f0f0;
+    }
+  
+    .drag-erea input {
+      margin: 0 auto;
+      border: none;
+    }
+  
+    button {
+      border: none;
+      border-radius: 18px;
+      background-color: rgba(255, 253, 249, 0.15);
+      width: 100%;
+      height: 60px;
+      font-size: 24px;
+      font-weight: normal;
+      color: #ffffff;
+      line-height: 1.6;
+      text-align: center;
+    }
+  </style>
 </head>
 
 <body>
-  <form method="POST" action="/register" enctype="multipart/form-data">
-    <label for="ipafile">Choose a ipa:</label>
-    <input type="file" id="ipafile" name="ipafile">
-    <button type="submit">Register</button>
-  </form>
+  <main>
+    <h1>Register</h1>
+    <form action="/register" method="POST" enctype="multipart/form-data">
+      <h4><label for="ipafile">Choose a ipa:</label></h4>
+      <div id="ipafile" class="drag-erea">
+        <input type="file" id="ipafile" name="ipafile">
+      </div>
+      <button type="submit">Register</button>
+    </form>
+  </main>
+  <script lang="text/javascript">
+    document.addEventListener('DOMContentLoaded', () => {
+      var uploadArea = document.getElementById('ipafile');
+
+      uploadArea.addEventListener("dragover", (event) => {
+        event.preventDefault();
+        event.target.classList.add('drag');
+      });
+
+      uploadArea.addEventListener("dragleave", (event) => {
+        event.target.classList.remove('drag');
+      });
+
+      // 追加のdropイベント
+      uploadArea.addEventListener("drop", (event) => {
+        event.preventDefault();
+        var input = document.querySelectorAll('input[name="ipafile"]');
+        input[0].files = event.dataTransfer.files;
+      });
+    });
+  </script>
 </body>
 
 </html>

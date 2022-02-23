@@ -10,7 +10,25 @@ body {
 	margin: 0;
 	padding: 8px;
 	box-sizing: border-box;
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+	font-family: -apple-system,BlinkMacSystemFont,sans-serif;
+	}
+
+	main {
+		text-align: center;
+		max-width: 1440px;
+		margin: 0 auto;
+	}
+
+	@media only screen and (max-width: 768px) {
+		main {
+			width: 95%;
+		}
+	}
+
+	@media (min-width: 640px) {
+		main {
+			max-width: none;
+		}
 }
 
 a {
@@ -35,7 +53,6 @@ input, button, select, textarea {
 	font-size: inherit;
 	-webkit-padding: 0.4em 0;
 	padding: 0.4em;
-	margin: 0 0 0.5em 0;
 	box-sizing: border-box;
 	border: 1px solid #ccc;
 	border-radius: 2px;
@@ -70,8 +87,9 @@ section {
 
 h1 {
 	margin: 0 auto;
-	color: rgb(255, 253, 249);
+	font-size: 400%;
 	font-weight: 200;
+	color: rgb(255, 253, 249);
 	text-align: center;
 }
 
@@ -97,6 +115,14 @@ h4 {
 	h4 {
 		font-size: 125%;
 	}
+}
+
+h6 {
+	font-size: 14px;
+	font-weight: normal;
+	color: rgba(255, 253, 249, 0.3);
+	margin: 8px auto;
+	text-align: center;
 }
 
 footer {

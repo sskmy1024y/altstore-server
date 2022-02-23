@@ -6,19 +6,26 @@ import { AppsJSON } from "../model/AppsJSON";
 import { getInfoPlist } from "../utils/InfoPlist";
 import { Log } from "../utils/Log";
 import { createAppInfo } from "./createAppInfo";
-import semver from "semver";
 
 export const generate = async () => {
-  const ipafiles = await filterByBundleID(
-    searchIPAFiles(`${config.rootDir}/public/assets`)
-  );
+  Log.info("start - generate app.json");
+  try {
+    const ipafiles = await filterByBundleID(
+      searchIPAFiles(`${config.rootDir}/public/assets`)
+    );
 
-  const appInfos = await Promise.all(
-    ipafiles.map(async (ipaPath) => await createAppInfo(ipaPath))
-  );
-  await createAppJson(
-    appInfos.filter((v): v is AppInfo => typeof v !== undefined)
-  );
+    const appInfos = await Promise.all(
+      ipafiles.map(async (ipaPath) => await createAppInfo(ipaPath))
+    );
+    await createAppJson(
+      appInfos.filter((v): v is AppInfo => typeof v !== undefined)
+    );
+    Log.info("end - generate app.json success");
+  } catch (e: unknown) {
+    if (e instanceof Error) {
+      Log.error("generate app.json error:", e);
+    }
+  }
 };
 
 const searchIPAFiles = (dirpath: string): string[] => {
@@ -56,14 +63,9 @@ const filterByBundleID = async (ipafiles: string[]): Promise<string[]> => {
   const filteredInfo = detailInfo.reduce<
     { ipafile: string; bundleID: string; version: string }[]
   >((prev, info) => {
-    const currentVersion = semver.valid(info.version);
-    if (currentVersion === null) return prev;
-
     const prevInfo = prev.find((v) => v.bundleID === info.bundleID);
-
     if (prevInfo) {
-      const prevVersion = semver.valid(prevInfo.version)!;
-      if (semver.gt(currentVersion, prevVersion)) {
+      if (info.version > prevInfo.version) {
         return [...prev.filter((v) => v.bundleID !== info.bundleID), info];
       } else {
         return prev;
