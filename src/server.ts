@@ -8,6 +8,7 @@ import { generate } from "./generate";
 import * as _ from "lodash";
 import serve from "koa-static";
 import auth from "koa-basic-auth";
+import { Log } from "./utils/Log";
 
 const app = new Koa();
 const router = new Router();
@@ -46,7 +47,8 @@ const WAIT_MS = 30000;
 watcher.on("ready", function () {
   console.log("ready watching...");
 
-  // watcher.on("add", _.debounce(generate, WAIT_MS));
-  watcher.on("change", _.debounce(generate, WAIT_MS));
-  watcher.on("unlink", _.debounce(generate, WAIT_MS));
+  watcher.on("all", (eventName, path) => {
+    Log.info(`detected ${eventName} event: ${path}`);
+    _.debounce(generate, WAIT_MS);
+  });
 });
