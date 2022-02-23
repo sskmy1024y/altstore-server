@@ -78,13 +78,14 @@ const generateAppInfo = async (
   const tintColor = await getTintColor(searchResult?.artworkUrl100);
   const downloadURL = ipaPath.replace(`${config.rootDir}/public`, "");
   const localizedDescription = searchResult?.description ?? "";
+  const versionDate = searchResult?.currentVersionReleaseDate ?? "";
 
   const appInfo = {
     name: infoPlist["CFBundleName"],
     bundleIdentifier: infoPlist["CFBundleIdentifier"],
     developerName: searchResult?.artistName ?? "",
     version: infoPlist["CFBundleVersion"],
-    versionDate: infoPlist["BuildDate"],
+    versionDate,
     versionDescription: searchResult?.releaseNotes ?? "",
     downloadURL,
     localizedDescription,
