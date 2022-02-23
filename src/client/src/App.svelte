@@ -4,7 +4,7 @@ import Title from "./component/Title.svelte";
 
 export let name;
 
-const sourceLink = `altstore://source?url=${HOST}`
+const sourceLink = `altstore://source?url=${HOST}/apps.json`
 </script>
 
 <main>
